@@ -1,0 +1,24 @@
+{
+  "name": "nft_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PreethamOO7/NFT_Project.git"
+  },
+  "author": "Preetham",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PreethamOO7/NFT_Project/issues"
+  },
+  "homepage": "https://github.com/PreethamOO7/NFT_Project#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongodb": "^4.6.0",
+    "mongoose": "^6.3.4"
+  }
+}
