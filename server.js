@@ -11,10 +11,10 @@ mongoose.connect(url,err=>{
         console.log('Connected to mongodb')
     }
 })
-
+app.use(express.json())
 const api = require('./Routes/api')
 app.use('/api',api)
-app.use(express.json())
+
 app.listen(9000, function(){
     console.log('Server Started')
 })

@@ -11,11 +11,12 @@ router.get('/',async(req,res)=>{
     }
 })
 router.post('/',async(req,res)=>{
+    const data = new NFT_DATA({
+        email : req.body.email
+    })
     try{
-        const data = await NFT_DATA.find({})
-        const doc = {email: "preethamgade11@gmail.com"}
-        const result = await NFT_DATA.insertOne(doc)
-        res.json({result,data})
+       const a1 = await data.save()
+        res.json(a1)
     }catch(err){
         res.send('Error' + err)
     }
