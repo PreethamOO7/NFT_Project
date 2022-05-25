@@ -3,6 +3,7 @@ const NFT_DATA = require('../Models/NFT')
 const router = express.Router()
 const nodemailer = require('nodemailer')
 const otpGenerator = require('otp-generator')
+const request = require('request')
 
 router.get('/',async(req,res)=>{
     try{
@@ -25,7 +26,7 @@ router.post('/postdata',async(req,res)=>{
     }
 })
 
-router.post('/Login',async(req,res)=>{
+router.post('/mint',async(req,res)=>{
     try{
         const email = req.body.email
         const public_key = req.body.public_key
@@ -116,7 +117,21 @@ router.post('/verifyOTP',async(req,res)=>{
     }
 })
 
-router.post('/DeliveryAddress',async(req,res)=>{
+// router.post('/DeliveryAddress',async(req,res)=>{
+//     try{
+//         const email = req.body.email
+//         const public_key = req.body.public_key
+//         const Delivery_address = req.body.Delivery_address
+//         const data = await NFT_DATA.find({"public_key":public_key})
+//         data[0].Delivery_address = Delivery_address
+//         data[0].save()
+//         res.status(200).send(data)
+//     }catch(err){
+//         res.status(400).send('Error' + err)
+//     }
+// })
+
+router.post('/RedeemMail',async(req,res)=>{
     try{
         const email = req.body.email
         const public_key = req.body.public_key
@@ -124,16 +139,6 @@ router.post('/DeliveryAddress',async(req,res)=>{
         const data = await NFT_DATA.find({"public_key":public_key})
         data[0].Delivery_address = Delivery_address
         data[0].save()
-        res.status(200).send(data)
-    }catch(err){
-        res.status(400).send('Error' + err)
-    }
-})
-
-router.post('/RedeemMail',async(req,res)=>{
-    try{
-        const email = req.body.email
-        const public_key = req.body.public_key
         const transporter = nodemailer.createTransport({
             service : "hotmail",
             auth:{
@@ -155,6 +160,27 @@ router.post('/RedeemMail',async(req,res)=>{
             console.log("sent:" + info.response)
         })
         res.status(200).send('Mail sent')
+    }catch(err){
+        res.status(400).send('Error' + err)
+    }
+})
+
+router.post('/savenftdetails',async(req,res)=>{
+    try{
+        const tokenId = req.body.tokenId
+        const public_key = req.body.public_key
+        const data = await NFT_DATA.find({"public_key":public_key})
+        var url = "https://api.coolcatsnft.com/cat/" + tokenId
+        data[0].NFTdetails.tokenId = tokenId
+        data[0].NFTdetails.tokenURI = url
+        request(url, { json: true }, (err, ans, body) => {
+            if (err) { return console.log(err); }
+            data[0].NFTdetails.imageurl = body.image
+            data[0].NFTdetails.name = body.name
+            data[0].NFTdetails.attributes = body.attributes
+            data[0].save()
+        })
+        res.status(200).send('ok')
     }catch(err){
         res.status(400).send('Error' + err)
     }
