@@ -24,7 +24,8 @@
     "mongodb": "^4.6.0",
     "mongoose": "^6.3.4",
     "nodemailer": "^6.7.5",
-    "otp-generator": "^4.0.0"
+    "otp-generator": "^4.0.0",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.6",

@@ -4,6 +4,13 @@ const NFTSchema = new mongoose.Schema({
     email : String,
     public_key : String,
     OTP : String,
+    NFTdetails: {
+        tokenId: Number,
+        tokenURI: String,
+        imageurl: String,
+        name: String,
+        attributes: Array
+    },
     Delivery_address: {
         Name : String,
         address1: String,
